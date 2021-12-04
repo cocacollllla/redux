@@ -17,6 +17,7 @@ ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementB
 //     case 'add':
 //       return [{text:action.text, id:Date.now()}, ...state];
 //       // return state.push({text:action.text});
+//       // 이렇게 state를 직접 수정하면 안됨. 반드시 깊은복사하여 사용하거나 새로운 데이터를 반환해야 한다. 직접 수정하거나 값을 할당할 경우 같은 값을 참조하기 때문에 가상DOM과 실제DOM이 비교했을 때 같다고 판단하여 렌더하지 않음. 
 //     case 'delete':
 //       return state.filter(todo => todo.id !== action.id);
 //     default:
@@ -32,7 +33,7 @@ ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementB
 // }
 
 // const paintTodo = () => {
-//   const toDos = store.getState();
+//   const toDos = store.getState(); // getState(); 나에게 현재의 state를 전달해줌.
 //   ul.innerHTML = "";
 //   toDos.forEach(toDo => {
 //     const li = document.createElement('li');
@@ -49,10 +50,14 @@ ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementB
 // }
 
 // store.subscribe(paintTodo);
+// subscribe 함수는 store 안에 있는 변화들을 알 수 있게 해줌. state에 변화가 있을 때마다 감지해서 호출된다.
 
 // const addTodo = text => {
 //   store.dispatch({type:'add', text})
 //  }
+// dispatch 는 reducer에 메세지를 보내는 역할. 그 메세지는 action이 가지고 있다.
+// action은 반드시 객체 형태여야 하며, type을 꼭 가져야 한다.
+// state를 수정할 수 있는 유일한 방법은 dispatch를 통해 메세지를 보내는 방법 뿐이다.
 
 // const onSubmit = e => {
 //   e.preventDefault();
